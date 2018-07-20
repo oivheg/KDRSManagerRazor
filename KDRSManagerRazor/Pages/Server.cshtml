@@ -1,0 +1,24 @@
+﻿@page
+@model ServerModel
+@{
+    ViewData["Title"] = "Server";
+}
+<h2>@ViewData["Title"]</h2>
+<h3>@Model.Message</h3>
+<form>
+    <div class="form-group">
+        <label for="InputServer">ServerAdress</label>
+        <input type="text" name="adress" class="form-control" id="inputserver" aria-describedby="emailHelp" placeholder="Server adresse">
+        <small id="emailHelp" class="form-text text-muted">eks: 91.192.122.29</small>
+    </div>
+    <div class="form-group">
+        <label for="InputEmail1">BrukerId</label>
+        <input type="text" name="id" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Skriv inn Bruker ID">
+    </div>
+    <div class="form-group">
+        <label for="inputPassword">Password</label>
+        <input type="password" name="pw" class="form-control" id="password" placeholder="">
+    </div>
+
+    <button type="submit" Value="AddServer" class="btn btn-primary">Submit</button>
+</form>
