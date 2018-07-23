@@ -37,11 +37,8 @@ namespace KDRSManagerRazor
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddProgressiveWebApp(new PwaOptions
-            {
-                RoutesToPreCache = "/",
-                Strategy = ServiceWorkerStrategy.CacheFirst
-            });
+
+            services.AddServiceWorker();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
