@@ -1,6 +1,6 @@
 {
-  "name": "Awesome Application",
-  "short_name": "Awesome",
+  "name": "KDRS Manager",
+  "short_name": "KDRS",
   "description": "The most awesome application in the world",
   "icons": [
     {
@@ -12,6 +12,6 @@
       "sizes": "512x512"
     }
   ],
-  "display": "minimal-ui",
+  "display": "standalone",
   "start_url": "/"
 }
