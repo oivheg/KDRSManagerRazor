@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Hanssens.Net;
 using KDRSManagerRazor.Connections;
 using KDRSManagerRazor.Data;
 using KDRSManagerRazor.Models;
@@ -28,22 +29,51 @@ namespace KDRSManagerRazor.Pages
             //data.Add("test1");
             //data.Add("test1");
 
-            List<Server> Servers = StoredData.ServerAdresses;
+            List<Server> Servers = StoredData.Servers;
             List<Company> list = new List<Company>();
-
-            foreach (var server in Servers)
+            try
             {
-                List<Company> tmp = (await LoadXMLCompanies(await wb.GetXml(server.Adress, server.UserID, server.Password, "3").ConfigureAwait(false)));
-
-                //List<Company> tmp = (await LoadXMLCompanies(await wb.GetXml("91.192.221.234", 999, "Fuglekasser", "3").ConfigureAwait(false)));
-                foreach (var Company in tmp)
+                foreach (var server in Servers)
                 {
-                    list.Add(Company);
+                    List<Company> tmp = (await LoadXMLCompanies(await wb.GetXml(server.Adress, server.UserID, server.Password, "3").ConfigureAwait(false)));
+
+                    //List<Company> tmp = (await LoadXMLCompanies(await wb.GetXml("91.192.221.234", 999, "Fuglekasser", "3").ConfigureAwait(false)));
+                    foreach (var Company in tmp)
+                    {
+                        list.Add(Company);
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                var tmp = "tekst";
             }
 
             return list;
         }
+
+        //public String GetKey()
+        //{
+        //    // initialize, with default settings
+        //    var storage = new LocalStorage();
+
+        //    //// ... or initialize with a custom configuration
+        //    //var config = new LocalStorageConfiguration()
+        //    //{
+        //    //    // see the section "Configuration" further on
+        //    //};
+
+        //    //var storage = new LocalStorage(config);
+
+        //    // store any object, or collection providing only a 'key'
+        //    var key = "whatever";
+        //    var value = "...";
+
+        //    storage.Store(key, value);
+        //    // fetch any object - as object
+        //    var skey = storage.Get(key);
+        //    return skey.ToString();
+        //}
 
         public void passID(string id)
         {

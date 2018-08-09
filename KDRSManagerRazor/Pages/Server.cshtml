@@ -1,5 +1,6 @@
 ﻿@page
 @model ServerModel
+@using KDRSManagerRazor.Models;
 @{
     ViewData["Title"] = "Server";
 
@@ -19,22 +20,63 @@
             </text>
         }
     }*@
+
+<script type="text/javascript" language="javascript">
+    function onSubmitButtonClick() {
+        alert("submit button clicked");
+    }
+</script>
+
 <h2>@ViewData["Title"]</h2>
 <h3>@Model.Message</h3>
-<form method="post">
-    <div class="form-group">
-        <label for="InputServer">ServerAdress</label>
-        <input type="text" name="adress" class="form-control" id="inputserver" aria-describedby="emailHelp" placeholder="Server adresse">
-        <small id="emailHelp" class="form-text text-muted">eks: 91.192.122.29</small>
-    </div>
-    <div class="form-group">
-        <label for="InputEmail1">BrukerId</label>
-        <input type="text" name="id" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Skriv inn Bruker ID">
-    </div>
-    <div class="form-group">
-        <label for="inputPassword">Password</label>
-        <input type="password" name="pw" class="form-control" id="password" placeholder="">
-    </div>
-    <input type="submit" value="Click" />
-    @*<button type="submit" value="Click" class="btn btn-primary">Submit</button>*@
-</form>
+@*<form method="post">
+        <div class="form-group">
+            <label for="InputServer">ServerAdress</label>
+            <input type="text" name="adress" class="form-control" id="inputserver" aria-describedby="emailHelp" placeholder="Server adresse">
+            <small id="emailHelp" class="form-text text-muted">eks: 91.192.122.29</small>
+        </div>
+        <div class="form-group">
+            <label for="InputEmail1">BrukerId</label>
+            <input type="text" name="id" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Skriv inn Bruker ID">
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" name="pw" class="form-control" id="password" placeholder="">
+        </div>
+        <input type="submit" value="Click" />
+        @*<button type="submit" value="Click" class="btn btn-primary">Submit</button>*
+    *</form>*
+*@
+
+@using (Html.BeginForm())
+{
+    <label for="ip">Server adresse:</label>
+    <input type="text" asp-for="ip">
+    <br />
+    <label for="user">Bruker Id</label>
+    <input type="text" asp-for="user">
+    <br />
+    <br />
+    <label for="pw">passord</label>
+    <input type="password" asp-for="pw">
+    <br />
+    <input type="submit" id="Submit">
+}
+Ip: @Model.ip
+User: @Model.user
+PW: @Model.pw
+
+<table cellpadding="20" cellspacing="20">
+    <tr><td>Server</td><td>User</td><td>Password</td></tr>
+    @foreach (Server srv in Model.ServerList())
+    {
+        if (srv != null)
+        {
+            <tr><td>@srv.Adress</td><td>@srv.UserID</td><td>@srv.Password</td></tr>
+        }
+
+        @*<button type="button" onclick="model.passid(@cmp.Id)" class="btn btn-light">Light</button>*@
+        @*<p> @Model.GetKey()</p>*@
+
+    }
+</table>

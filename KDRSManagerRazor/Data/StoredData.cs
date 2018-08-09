@@ -1,4 +1,5 @@
-﻿using KDRSManagerRazor.Models;
+﻿using Hanssens.Net;
+using KDRSManagerRazor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,9 @@ namespace KDRSManagerRazor.Data
     {
         private static List<Company> Companies = new List<Company>();
         private static List<Report> Reports = new List<Report>();
-        public static List<Server> ServerAdresses = new List<Server>();
+        public static List<Server> Servers = new List<Server>();
+
+        private static LocalStorage storage = new LocalStorage();
 
         public static List<Company> GetCompanies()
         {
@@ -26,14 +29,42 @@ namespace KDRSManagerRazor.Data
             //Companies = list;
         }
 
+        private static List<String> storageKeys = new List<string>();
+
         internal static void SetServer(Server srv)
         {
-            ServerAdresses.Add(srv);
+            //Servers.Add(srv);
+
+            // store any object, or collection providing only a 'key'
+            string key = srv.Adress;
+            string value = srv.Adress + ";" + srv.UserID + ";" + srv.Password;
+            storage.Store(key, value);
+            storageKeys.Add(key);
         }
 
-        internal static List<Server> GetServer()
+        internal static List<Server> GetServers()
         {
-            return ServerAdresses;
+            //// fetch any object - as object
+            //var skey = storage.Get(key);
+            //return skey.ToString();
+            String key = "Server1";
+
+            foreach (String item in storageKeys)
+            {
+                String Server = (string)storage.Get(item);
+
+                String ip, pw;
+                String user;
+                string[] words = Server.Split(";");
+
+                ip = words.GetValue(0).ToString();
+                user = words.GetValue(1).ToString();
+                pw = words.GetValue(2).ToString();
+                Server TMP = new Server(ip, int.Parse(user), pw);
+                Servers.Add(TMP);
+            }
+
+            return Servers;
         }
 
         public static void SetReports()
