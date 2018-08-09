@@ -9,6 +9,9 @@ namespace KDRSManagerRazor.Pages
 {
     public class ServerModel : PageModel
     {
+        [BindProperty]
+        public string EmailAddress { get; set; }
+
         public string Message { get; set; }
 
         public void OnGet()
@@ -16,9 +19,10 @@ namespace KDRSManagerRazor.Pages
             Message = "Your application description page.";
         }
 
-        public void Add(ServerModel srv)
+        public void OnPost(string emailAddress)
         {
-            string tmp = "tmp";
+            Response.Redirect("http://vg.no");
+            // do something with emailAddress
         }
 
         public void BtnClicked()

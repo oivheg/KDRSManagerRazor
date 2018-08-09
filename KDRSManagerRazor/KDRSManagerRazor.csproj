@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights.Web" Version="2.6.4" />
+    <PackageReference Include="Bootstrap.Datepicker" Version="1.7.1" />
+    <PackageReference Include="LocalStorage" Version="1.1.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.Web" Version="2.7.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.33" />
   </ItemGroup>

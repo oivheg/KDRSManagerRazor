@@ -2,10 +2,26 @@
 @model ServerModel
 @{
     ViewData["Title"] = "Server";
+
 }
+@*@{
+        if (Request. == "POST")
+        {
+            string companyname = Request.Form["companyname"];
+            string contactname = Request.Form["contactname"];
+            int employeecount = Request.Form["employees"].AsInt();
+
+            <text>
+                You entered: <br />
+                Company Name: @companyname <br />
+                Contact Name: @contactname <br />
+                Employee Count: @employeecount <br />
+            </text>
+        }
+    }*@
 <h2>@ViewData["Title"]</h2>
 <h3>@Model.Message</h3>
-<form>
+<form method="post">
     <div class="form-group">
         <label for="InputServer">ServerAdress</label>
         <input type="text" name="adress" class="form-control" id="inputserver" aria-describedby="emailHelp" placeholder="Server adresse">
@@ -19,6 +35,6 @@
         <label for="inputPassword">Password</label>
         <input type="password" name="pw" class="form-control" id="password" placeholder="">
     </div>
-
-    <button type="submit" Value="AddServer" class="btn btn-primary">Submit</button>
+    <input type="submit" value="Click" />
+    @*<button type="submit" value="Click" class="btn btn-primary">Submit</button>*@
 </form>

@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
+using Hanssens.Net;
 using KDRSManagerRazor.Data;
 using KDRSManagerRazor.Models;
 using Microsoft.AspNetCore.Builder;
@@ -38,7 +41,12 @@ namespace KDRSManagerRazor
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddProgressiveWebApp(new PwaOptions { RegisterServiceWorker = true });
+            services.AddProgressiveWebApp(new PwaOptions
+            {
+                RegisterServiceWorker = true,
+                RoutesToPreCache = "/",
+                Strategy = ServiceWorkerStrategy.CacheFirst
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
