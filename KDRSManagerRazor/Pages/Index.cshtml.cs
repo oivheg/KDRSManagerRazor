@@ -29,7 +29,7 @@ namespace KDRSManagerRazor.Pages
             //data.Add("test1");
             //data.Add("test1");
 
-            List<Server> Servers = StoredData.Servers;
+            List<Server> Servers = StoredData.GetServers();
             List<Company> list = new List<Company>();
             try
             {
@@ -48,7 +48,12 @@ namespace KDRSManagerRazor.Pages
             {
                 var tmp = "tekst";
             }
-
+            if (list.Count == 0)
+            {
+                Company NoComp = new Company();
+                NoComp.Text = "Please go to Server meny and adda server";
+                list.Add(NoComp);
+            }
             return list;
         }
 

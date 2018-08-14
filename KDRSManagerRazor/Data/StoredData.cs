@@ -13,7 +13,14 @@ namespace KDRSManagerRazor.Data
         private static List<Report> Reports = new List<Report>();
         public static List<Server> Servers = new List<Server>();
 
-        private static LocalStorage storage = new LocalStorage();
+        private static LocalStorageConfiguration config = new LocalStorageConfiguration()
+        {
+            // see the section "Configuration" further on
+            AutoLoad = false,
+            AutoSave = false
+        };
+
+        private static LocalStorage storage = new LocalStorage(config);
 
         public static List<Company> GetCompanies()
         {
@@ -47,7 +54,8 @@ namespace KDRSManagerRazor.Data
             //// fetch any object - as object
             //var skey = storage.Get(key);
             //return skey.ToString();
-            String key = "Server1";
+            //String key = "Server1";
+            Servers.Clear();
 
             foreach (String item in storageKeys)
             {

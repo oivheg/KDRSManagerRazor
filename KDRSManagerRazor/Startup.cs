@@ -45,7 +45,7 @@ namespace KDRSManagerRazor
             {
                 RegisterServiceWorker = true,
                 RoutesToPreCache = "/",
-                Strategy = ServiceWorkerStrategy.CacheFirst
+                Strategy = ServiceWorkerStrategy.NetworkFirst
             });
         }
 
@@ -62,22 +62,22 @@ namespace KDRSManagerRazor
                 app.UseHsts();
             }
 
-            // initialize, with default settings
-            var storage = new LocalStorage();
+            //// initialize, with default settings
+            //var storage = new LocalStorage();
 
-            //// ... or initialize with a custom configuration
-            //var config = new LocalStorageConfiguration()
-            //{
-            //    // see the section "Configuration" further on
-            //};
+            ////// ... or initialize with a custom configuration
+            ////var config = new LocalStorageConfiguration()
+            ////{
+            ////    // see the section "Configuration" further on
+            ////};
 
-            //var storage = new LocalStorage(config);
+            ////var storage = new LocalStorage(config);
 
-            // store any object, or collection providing only a 'key'
-            var key = "whatever";
-            var value = "...";
+            //// store any object, or collection providing only a 'key'
+            //var key = "whatever";
+            //var value = "...";
 
-            storage.Store(key, value);
+            //storage.Store(key, value);
 
             //Server srv1 = new Server("91.192.221.234", 999, "Fuglekasser");
             //Server srv2 = new Server("91.192.221.162", 999, "Fuglekasser");
