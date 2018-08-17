@@ -20,13 +20,23 @@
             </text>
         }
     }*@
-
+<div id="result"></div>
 <script type="text/javascript" language="javascript">
     function onSubmitButtonClick() {
         alert("submit button clicked");
     }
 </script>
-
+<script>
+    // Check browser support
+    if (typeof (Storage) !== "undefined") {
+        // Store
+        localStorage.setItem("lastname", "Smith");
+        // Retrieve
+        document.getElementById("result").innerHTML = localStorage.getItem("lastname");
+    } else {
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+    }
+</script>
 <h2>@ViewData["Title"]</h2>
 <h3>@Model.Message</h3>
 @*<form method="post">
@@ -51,32 +61,85 @@
 @using (Html.BeginForm())
 {
     <label for="ip">Server adresse:</label>
-    <input type="text" asp-for="ip">
+    <input id="ip" type="text" asp-for="ip">
     <br />
     <label for="user">Bruker Id</label>
-    <input type="text" asp-for="user">
+    <input id="user" type="text" asp-for="user">
     <br />
     <br />
     <label for="pw">passord</label>
-    <input type="password" asp-for="pw">
+    <input id="password" type="password" asp-for="pw">
     <br />
-    <input type="submit" id="Submit">
+    <input Value="Submitt" type="Button" id="Submit" onclick="addServer()">
+    <input Value="Load" type="Button" id="Load" onclick="LoadServers()">
 }
 Ip: @Model.ip
 User: @Model.user
 PW: @Model.pw
 
-<table cellpadding="20" cellspacing="20">
-    <tr><td>Server</td><td>User</td><td>Password</td></tr>
-    @foreach (Server srv in Model.ServerList())
-    {
-        if (srv != null)
-        {
-            <tr><td>@srv.Adress</td><td>@srv.UserID</td><td>@srv.Password</td></tr>
+<script>
+    var count = 1;
+    function addServer() {
+        if (typeof (Storage) !== "undefined") {
+
+            localStorage.setItem("Server" + count, document.getElementById('ip').value + ";" + document.getElementById('user').value + ";" + document.getElementById('password').value);
+            document.getElementById("result").innerHTML = "You have clicked the button " + localStorage.Server;
+            count++;
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+        //var Countservers = document.getElementById(ServerTable).getElementsByTagName("tr").length;
+        //document.getElementById("result").innerHTML = "antall i tabellen er " + Countservers;
+
+        //if (Countservers > 1) {
+
+        //    var temp = "no avalible";
+        //}
+
+        //document.getElementById("ServerTable").innerHTML = "<tr><td> " + res[0] + "</td><td>" + res[1] + "</td><td>" + res[2] + "</td></tr>";
+
+    }
+
+    function LoadServers() {
+        var tbody = document.getElementById("serverlist");
+        tbody.innerHTML = "";
+        for (var i = 1; i < localStorage.length; i++) {
+
+            var str = localStorage.getItem("Server" + i);
+            var res = str.split(";");
+            var table = document.getElementById("ServerTable");
+
+            var row = document.createElement("tr");
+            var cell1 = document.createElement("td");
+            var cell2 = document.createElement("td");
+            var cell3 = document.createElement("td");
+            cell1.innerHTML = res[0];
+            cell2.innerHTML = res[1];
+            cell3.innerHTML = res[2];
+            row.appendChild(cell1);
+            row.appendChild(cell2);
+            row.appendChild(cell3);
+            tbody.appendChild(row);
+            table.appendChild(tbody);
         }
 
-        @*<button type="button" onclick="model.passid(@cmp.Id)" class="btn btn-light">Light</button>*@
-        @*<p> @Model.GetKey()</p>*@
+    }
+</script>
+
+<table id="ServerTable" cellpadding="20" cellspacing="20">
+    <thead>
+        <tr><th>Server</th><th>User</th><th>Password</th></tr>
+    </thead>
+    <tbody id="serverlist"></tbody>
+    @*@foreach (Server srv in Model.ServerList())
+        {
+            if (srv != null)
+            {
+                <tr><td>@srv.Adress</td><td>@srv.UserID</td><td>@srv.Password</td></tr>
+            }*@
+
+    @*<button type="button" onclick="model.passid(@cmp.Id)" class="btn btn-light">Light</button>*@
+    @*<p> @Model.GetKey()</p>*@
 
     }
 </table>
