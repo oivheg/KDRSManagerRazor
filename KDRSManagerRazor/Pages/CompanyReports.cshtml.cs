@@ -12,11 +12,13 @@ namespace KDRSManagerRazor.Pages
     public class CompanyReportsModel : PageModel
     {
         public String Name = "Not set";
+        public string srv = "no server set";
 
         public void OnGet()
         {
             //string tmp = Request.QueryString.Value;
             string _id = Request.Query["id"];
+            srv = Request.Query["srv"];
             StoredData.SetReports();
             List<Company> cmop = StoredData.GetCompanies();
 

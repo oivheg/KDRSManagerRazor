@@ -57,35 +57,25 @@ namespace KDRSManagerRazor.Pages
             return list;
         }
 
-        //public String GetKey()
-        //{
-        //    // initialize, with default settings
-        //    var storage = new LocalStorage();
-
-        //    //// ... or initialize with a custom configuration
-        //    //var config = new LocalStorageConfiguration()
-        //    //{
-        //    //    // see the section "Configuration" further on
-        //    //};
-
-        //    //var storage = new LocalStorage(config);
-
-        //    // store any object, or collection providing only a 'key'
-        //    var key = "whatever";
-        //    var value = "...";
-
-        //    storage.Store(key, value);
-        //    // fetch any object - as object
-        //    var skey = storage.Get(key);
-        //    return skey.ToString();
-        //}
-
         public void passID(string id)
         {
             RedirectToPage("SomeOtherPage", new { age = id, });
         }
 
-        private async Task<List<Company>> LoadXMLCompanies(String xml)
+        public async Task<JsonResult> OnGetFilterAsync(String Adress, String UserID, String Password)
+        {
+            Server srv = new Server
+            {
+                Adress = Adress,
+                UserID = int.Parse(UserID),
+                Password = Password
+            };
+            List<Company> TMPlist = (await LoadXMLCompanies(await wb.GetXml(srv.Adress, srv.UserID, srv.Password, "3").ConfigureAwait(false), srv.Adress));
+            //StoredData.SetServer(srv);
+            return new JsonResult(TMPlist);
+        }
+
+        private async Task<List<Company>> LoadXMLCompanies(String xml, String srv = "")
         {
             List<Company> rawData = null;
             await Task.Factory.StartNew(delegate
@@ -99,7 +89,8 @@ namespace KDRSManagerRazor.Pages
                                                  {
                                                      Id = s.Element(d + "ID").Value,
                                                      Text = s.Element(d + "Name").Value,
-                                                     Description = "Salg den 11.07:  " + s.Element(d + "SalesAmount").Value,
+                                                     Description = "Salg i dag " + s.Element(d + "SalesAmount").Value,
+                                                     Server = srv
                                                  };
                 rawData = Companies.ToList();
             });

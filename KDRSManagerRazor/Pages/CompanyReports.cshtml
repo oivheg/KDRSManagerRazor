@@ -8,6 +8,7 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">@Model.Name</h5>
+        <h6 id="srv">@Model.srv</h6>
     </div>
 </div>
 <div class="list-group">
@@ -15,7 +16,7 @@
     @foreach (Report report in Model.ReportList())
     {
 
-        <a href="~/report?id=@report.Id" class="list-group-item"><h5>@report.DisplayName</h5></a>
+        <a href="~/report?id=@report.Id&srv=@Model.srv" class="list-group-item"><h5>@report.DisplayName</h5></a>
 
     }
 </div>

@@ -5,3 +5,68 @@
 }
 
 <h2>@Model.Name</h2>
+<h6 id="rpid">@Model.ID</h6>
+<h6 id="rpsrv">@Model._srv</h6>
+
+<div class="list-group" id="cmpList">
+</div>
+<script type="text/javascript"
+        src="https://code.jquery.com/jquery-1.12.4.js">
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        console.log('this is run on page load');
+        loadCMP();
+    });
+
+    function loadCMP() {
+
+        if (localStorage.length === 0) {
+            $('#cmpList').append('<a href="" class="list-group-item"><h4>Please go to Server meny and adda server</h4></a>');
+
+        } else {
+            $('#cmpList').empty();
+        };
+
+        var Server = new Object();
+        for (var i = 1; i < localStorage.length + 1; i++) {
+
+            var str = localStorage.getItem("Server" + i);
+            var res = str.split(";");
+            if (res[0] === $('#rpsrv').text()) {
+                Server.Adress = res[0],
+                    Server.UserID = res[1],
+                    Server.Password = res[2];
+            }
+
+        }
+        if (Server !== null) {
+            $.ajax({
+                url: '/Report/?handler=Report',
+                data: { Adress: Server.Adress, UserID: Server.UserID, Password: Server.Password, id: $('#rpid').text() },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response !== null) {
+                        //alert("Adress : " + response[0].id + " ID of the company " + response[0].id );
+                        /**/
+                        response.forEach(function (data) {
+                            $('#cmpList').append('<a href=""  class="list-group-item"><h4>' + data.name + '</h4>' + ' SalesAmount: ' + data.salesAmount + '<br> CostPrice ' + data.costPrice + '</a>');
+
+                        });
+                        //$('#cmpList').append('<a href=""  class="list-group-item"><h4>' + response[0].name + '</h4>' + ' SalesAmount: ' + response[0].salesAmount + '<br> CostPrice ' + response[0].costPrice + '</a>');
+
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+
+    }
+</script>

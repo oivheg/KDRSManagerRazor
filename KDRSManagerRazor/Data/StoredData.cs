@@ -68,7 +68,12 @@ namespace KDRSManagerRazor.Data
                 ip = words.GetValue(0).ToString();
                 user = words.GetValue(1).ToString();
                 pw = words.GetValue(2).ToString();
-                Server TMP = new Server(ip, int.Parse(user), pw);
+                Server TMP = new Server
+                {
+                    Adress = ip,
+                    UserID = int.Parse(user),
+                    Password = pw
+                };
                 Servers.Add(TMP);
             }
 

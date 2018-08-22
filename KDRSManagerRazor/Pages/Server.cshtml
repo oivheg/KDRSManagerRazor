@@ -5,59 +5,12 @@
     ViewData["Title"] = "Server";
 
 }
-@*@{
-        if (Request. == "POST")
-        {
-            string companyname = Request.Form["companyname"];
-            string contactname = Request.Form["contactname"];
-            int employeecount = Request.Form["employees"].AsInt();
 
-            <text>
-                You entered: <br />
-                Company Name: @companyname <br />
-                Contact Name: @contactname <br />
-                Employee Count: @employeecount <br />
-            </text>
-        }
-    }*@
 <div id="result"></div>
-<script type="text/javascript" language="javascript">
-    function onSubmitButtonClick() {
-        alert("submit button clicked");
-    }
-</script>
-<script>
-    // Check browser support
-    if (typeof (Storage) !== "undefined") {
-        // Store
-        localStorage.setItem("lastname", "Smith");
-        // Retrieve
-        document.getElementById("result").innerHTML = localStorage.getItem("lastname");
-    } else {
-        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-    }
-</script>
+
 <h2>@ViewData["Title"]</h2>
 <h3>@Model.Message</h3>
-@*<form method="post">
-        <div class="form-group">
-            <label for="InputServer">ServerAdress</label>
-            <input type="text" name="adress" class="form-control" id="inputserver" aria-describedby="emailHelp" placeholder="Server adresse">
-            <small id="emailHelp" class="form-text text-muted">eks: 91.192.122.29</small>
-        </div>
-        <div class="form-group">
-            <label for="InputEmail1">BrukerId</label>
-            <input type="text" name="id" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Skriv inn Bruker ID">
-        </div>
-        <div class="form-group">
-            <label for="inputPassword">Password</label>
-            <input type="password" name="pw" class="form-control" id="password" placeholder="">
-        </div>
-        <input type="submit" value="Click" />
-        @*<button type="submit" value="Click" class="btn btn-primary">Submit</button>*
-    *</form>*
-*@
-
+@Html.Hidden("PostID", Model.comment);
 @using (Html.BeginForm())
 {
     <label for="ip">Server adresse:</label>
@@ -77,33 +30,53 @@ Ip: @Model.ip
 User: @Model.user
 PW: @Model.pw
 
+<table id="ServerTable" cellpadding="20" cellspacing="20" onload="LoadServers()">
+    <thead>
+        <tr><th>Server</th><th>User</th><th>Password</th></tr>
+    </thead>
+
+    <tbody id="serverlist"></tbody>
+</table>
+
+<table id="ServerTable2" cellpadding="20" cellspacing="20">
+    <thead>
+        <tr><th>Server</th><th>User</th><th>Password</th></tr>
+    </thead>
+    <tbody id="serverlist">
+        @foreach (Server srv in Model.ServerList())
+        {
+            if (srv != null)
+            {
+                <tr><td>@srv.Adress</td><td>@srv.UserID</td><td>@srv.Password</td></tr>
+            }
+        }
+    </tbody>
+</table>
+
 <script>
     var count = 1;
+    (function () {
+        LoadServers();
+
+    })();
+
     function addServer() {
         if (typeof (Storage) !== "undefined") {
 
             localStorage.setItem("Server" + count, document.getElementById('ip').value + ";" + document.getElementById('user').value + ";" + document.getElementById('password').value);
             document.getElementById("result").innerHTML = "You have clicked the button " + localStorage.Server;
             count++;
+            LoadServers();
         } else {
             document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
         }
-        //var Countservers = document.getElementById(ServerTable).getElementsByTagName("tr").length;
-        //document.getElementById("result").innerHTML = "antall i tabellen er " + Countservers;
-
-        //if (Countservers > 1) {
-
-        //    var temp = "no avalible";
-        //}
-
-        //document.getElementById("ServerTable").innerHTML = "<tr><td> " + res[0] + "</td><td>" + res[1] + "</td><td>" + res[2] + "</td></tr>";
 
     }
 
     function LoadServers() {
         var tbody = document.getElementById("serverlist");
         tbody.innerHTML = "";
-        for (var i = 1; i < localStorage.length; i++) {
+        for (var i = 1; i < localStorage.length + 1; i++) {
 
             var str = localStorage.getItem("Server" + i);
             var res = str.split(";");
@@ -121,25 +94,9 @@ PW: @Model.pw
             row.appendChild(cell3);
             tbody.appendChild(row);
             table.appendChild(tbody);
+            count = i + 1;
+            document.getElementById('PostID').value = cell1;
         }
 
     }
 </script>
-
-<table id="ServerTable" cellpadding="20" cellspacing="20">
-    <thead>
-        <tr><th>Server</th><th>User</th><th>Password</th></tr>
-    </thead>
-    <tbody id="serverlist"></tbody>
-    @*@foreach (Server srv in Model.ServerList())
-        {
-            if (srv != null)
-            {
-                <tr><td>@srv.Adress</td><td>@srv.UserID</td><td>@srv.Password</td></tr>
-            }*@
-
-    @*<button type="button" onclick="model.passid(@cmp.Id)" class="btn btn-light">Light</button>*@
-    @*<p> @Model.GetKey()</p>*@
-
-    }
-</table>

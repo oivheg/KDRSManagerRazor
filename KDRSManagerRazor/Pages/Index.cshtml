@@ -8,7 +8,7 @@
 
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Selskap</h5>
+        @*<h5 class="card-title">Selskap</h5>*@
     </div>
 </div>
 
@@ -35,15 +35,75 @@
     </div>
 </div>
 
-<div class="list-group">
+<div class="list-group" id="cmpList">
 
-    @foreach (Company cmp in await Model.CompanyList())
-    {
+    @*@foreach (Company cmp in await Model.CompanyList())
+        {
 
-        <a href="~/companyreports?id=@cmp.Id" onclick="model.passid(@cmp.Id)" class="list-group-item"><h4>@cmp.Text</h4>  @cmp.Description</a>
+            <a href="~/companyreports?id=@cmp.Id" onclick="model.passid(@cmp.Id)" class="list-group-item"><h4>@cmp.Text</h4>  @cmp.Description</a>
 
-        @*<button type="button" onclick="model.passid(@cmp.Id)" class="btn btn-light">Light</button>*@
-        @*<p> @Model.GetKey()</p>*@
+            @*<button type="button" onclick="model.passid(@cmp.Id)" class="btn btn-light">Light</button>*@
+    @*<p> @Model.GetKey()</p>*
+
+        }*@
+</div>
+<input type="button"
+       id="btnPost"
+       value="Post Data" />
+
+<script type="text/javascript"
+        src="https://code.jquery.com/jquery-1.12.4.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        console.log('this is run on page load');
+        loadCMP();
+    });
+
+    function loadCMP() {
+
+        if (localStorage.length === 0) {
+            $('#cmpList').append('<a href="" class="list-group-item"><h4>Please go to Server meny and adda server</h4></a>');
+
+        } else {
+            $('#cmpList').empty();
+        };
+        for (var i = 1; i < localStorage.length + 1; i++) {
+
+            var str = localStorage.getItem("Server" + i);
+            var res = str.split(";");
+
+            var Server = new Object();
+            Server.Adress = res[0],
+                Server.UserID = res[1],
+                Server.Password = res[2];
+
+            if (Server !== null) {
+                $.ajax({
+                    url: '/?handler=Filter',
+                    data: { Adress: Server.Adress, UserID: Server.UserID, Password: Server.Password },
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response !== null) {
+                            //alert("Adress : " + response[0].id + " ID of the company " + response[0].id );
+                            /**/
+                            $('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '&srv=' + response[0].server + '"  class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
+                            /**/
+                            //$('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '" onclick="model.passid(' + response[0].id + ')" class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
+
+                        }
+                    },
+                    failure: function (response) {
+                        alert(response.responseText);
+                    },
+                    error: function (response) {
+                        alert(response.responseText);
+                    }
+                });
+            }
+
+        }
 
     }
-</div>
+</script>

@@ -20,11 +20,14 @@ namespace KDRSManagerRazor.Pages
         [BindProperty]
         public String pw { get; set; }
 
+        [BindProperty]
+        public String comment { get; set; }
+
         public string Message { get; set; }
 
         public void OnGet()
         {
-            Message = "Your application description page.";
+            Message = "Your application description page." + comment;
         }
 
         //public void OnPost(string inputserver)
@@ -33,17 +36,21 @@ namespace KDRSManagerRazor.Pages
         //    // do something with emailAddress
         //}
 
-        public IActionResult OnPost()
-        {
-            Server srv = new Server(ip, user, pw);
-            StoredData.SetServer(srv);
-            ModelState.Clear();
-            return Page();
-        }
+        //public IActionResult OnPost()
+        //{
+        //    Server srv = new Server(ip, user, pw);
+        //    StoredData.SetServer(srv);
+        //    ModelState.Clear();
+        //    return Page();
+        //}
 
         public string BtnClicked()
         {
             return "text";
+        }
+
+        public void getServersFromTable()
+        {
         }
 
         public List<Server> ServerList()
