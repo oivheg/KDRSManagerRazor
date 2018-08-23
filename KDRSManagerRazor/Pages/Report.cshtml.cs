@@ -94,7 +94,7 @@ namespace KDRSManagerRazor.Pages
                 {
                     IEnumerable<object> Companies = from s in doc.Descendants().Where(x => x.Name.LocalName == "properties")
 
-                                                    select new SaleReportD
+                                                    select new SaleReportA
                                                     {
                                                         ID = int.Parse(s.Element(d + "ID").Value),
                                                         Name = s.Element(d + "Name").Value,

@@ -86,7 +86,7 @@ namespace KDRSManagerRazor.Data
             List<Report> data = new List<Report>();
 
             Reports.Add(new Report(1, "Salgs Rapport Avdeling", "SaleReportD"));
-            Reports.Add(new Report(2, "Salgs Rapport Ansatt", "SaleReportA"));
+            Reports.Add(new Report(4, "Salgs Rapport Ansatt", "SaleReportA"));
             Reports.Add(new Report(3, "Salgs Rapport Time", "SaleReportT"));
         }
 

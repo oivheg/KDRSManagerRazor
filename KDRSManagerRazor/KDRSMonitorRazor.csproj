@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bootstrap.Datepicker" Version="1.8.0" />
+    <PackageReference Include="Bootstrap.v3.Datetimepicker" Version="4.17.45" />
     <PackageReference Include="LocalStorage" Version="1.1.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.Web" Version="2.7.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
