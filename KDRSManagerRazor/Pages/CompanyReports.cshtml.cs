@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using KDRSManagerRazor.Data;
@@ -13,12 +14,17 @@ namespace KDRSManagerRazor.Pages
     {
         public String Name = "Not set";
         public string srv = "no server set";
+        public string From, To;
 
         public void OnGet()
         {
             //string tmp = Request.QueryString.Value;
             string _id = Request.Query["id"];
             srv = Request.Query["srv"];
+            //From = DateTime.ParseExact(Request.Query["from"], "d", CultureInfo.InvariantCulture);
+            //To = DateTime.ParseExact(Request.Query["to"], "d", CultureInfo.InvariantCulture);
+            From = Request.Query["from"];
+            To = Request.Query["to"];
             StoredData.SetReports();
             List<Company> cmop = StoredData.GetCompanies();
 

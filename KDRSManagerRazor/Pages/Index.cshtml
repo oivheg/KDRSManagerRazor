@@ -24,9 +24,9 @@
 
         }*@
 </div>
-<input type="button"
-       id="btnPost"
-       value="Post Data" />
+@*<input type="button"
+    id="btnPost"
+    value="Post Data" />*@
 
 <script type="text/javascript"
         src="https://code.jquery.com/jquery-1.12.4.js">
@@ -36,15 +36,20 @@
         console.log('this is run on page load');
         loadCMP();
     });
-
+    const state = {
+        debounced: {
+            x: 0,
+            y: 0,
+        }
+    }
     function loadCMP() {
-
+        event.stopPropagation();
         if (localStorage.length === 0) {
             $('#cmpList').append('<a href="" class="list-group-item"><h4>Please go to Server meny and adda server</h4></a>');
 
         } else {
             $('#cmpList').empty();
-        };
+        }
         for (var i = 1; i < localStorage.length + 1; i++) {
 
             var str = localStorage.getItem("Server" + i);
@@ -67,11 +72,12 @@
                             /**/
                             //$('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '&srv=' + response[0].server + '&from=' + $('#dateFrom').data('datepicker').viewDate + ' "  class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
                             /**/
-                            $('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '&srv=' + response[0].server + '&from=' + $('#dateFrom').val() + ' "  class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
+                            $('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '&srv=' + response[0].server + '&from=' + $('#dateFrom').val() + '&to=' + $('#dateTo').val() + ' "  class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
 
                             //$('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '" onclick="model.passid(' + response[0].id + ')" class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
 
                         }
+
                     },
                     failure: function (response) {
                         alert(response.responseText);
@@ -85,4 +91,7 @@
         }
 
     }
+
+    
+    
 </script>

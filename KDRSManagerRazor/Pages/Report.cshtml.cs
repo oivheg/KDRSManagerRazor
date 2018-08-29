@@ -18,6 +18,7 @@ namespace KDRSManagerRazor.Pages
         public String ID = "0";
         public string _srv = "not set";
         private List<Report> LstRp;
+        public string From, To;
 
         public void OnGet()
         {
@@ -25,7 +26,8 @@ namespace KDRSManagerRazor.Pages
             //string tmp = Request.QueryString.Value;
             string _id = Request.Query["id"];
             _srv = Request.Query["srv"];
-
+            From = Request.Query["from"];
+            To = Request.Query["to"];
             ID = _id;
 
             LstRp = StoredData.GetReports();
@@ -41,7 +43,7 @@ namespace KDRSManagerRazor.Pages
 
         private WebRequest wb = new WebRequest();
 
-        public async Task<JsonResult> OnGetReportAsync(String Adress, String UserID, String Password, String id)
+        public async Task<JsonResult> OnGetReportAsync(String Adress, String UserID, String Password, String id, String from = "Empty", String to = "")
         {
             Server srv = new Server
             {
@@ -50,7 +52,7 @@ namespace KDRSManagerRazor.Pages
                 Password = Password
             };
             int ReportType = int.Parse(id);
-            List<object> tmp = (await LoadXMLReportAsync(await wb.GetXml(srv.Adress, srv.UserID, srv.Password, ReportType.ToString()).ConfigureAwait(false), ReportType));
+            List<object> tmp = (await LoadXMLReportAsync(await wb.GetXml(srv.Adress, srv.UserID, srv.Password, ReportType.ToString(), from).ConfigureAwait(false), ReportType));
 
             return new JsonResult(tmp);
         }

@@ -11,12 +11,36 @@
         <h6 id="srv">@Model.srv</h6>
     </div>
 </div>
-<div class="list-group">
+<div id="cmpreport" class="list-group">
 
-    @foreach (Report report in Model.ReportList())
-    {
+    @*@foreach (Report report in Model.ReportList())
+        {
 
-        <a href="~/report?id=@report.Id&srv=@Model.srv" class="list-group-item"><h5>@report.DisplayName</h5></a>
+            <a href="~/report?id=@report.Id&srv=@Model.srv " class="list-group-item"><h5>@report.DisplayName</h5></a>
 
-    }
+        }*@
 </div>
+
+<script type="text/javascript"
+        src="https://code.jquery.com/jquery-1.12.4.js">
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        console.log('this is run on page load');
+
+        $('#dateFrom').val( " @Model.From.ToString()");
+
+        $('#dateTo').val("@Model.To");
+
+            @foreach (Report report in Model.ReportList()){  // <----  placed on the same line, WORKING !!!
+        <text>
+        $('#cmpreport').append('<a href="~/report?id=@report.Id&srv=@Model.srv&From='+$('#dateFrom').val()+'&To='+$('#dateFrom').val()+'"class="list-group-item"><h5>@report.DisplayName</h5></a>');
+        </text>
+    }
+
+    });
+
+    function loadCMP() {
+
+    };
+</script>

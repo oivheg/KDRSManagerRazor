@@ -18,6 +18,9 @@
     $(document).ready(function () {
         console.log('this is run on page load');
         loadCMP();
+         $('#dateFrom').val( "@Model.From.ToString()");
+
+        $('#dateTo').val("@Model.To");
     });
 
     function loadCMP() {
@@ -44,7 +47,7 @@
         if (Server !== null) {
             $.ajax({
                 url: '/Report/?handler=Report',
-                data: { Adress: Server.Adress, UserID: Server.UserID, Password: Server.Password, id: $('#rpid').text() },
+                data: { Adress: Server.Adress, UserID: Server.UserID, Password: Server.Password, id: $('#rpid').text(), from: $('#dateFrom').val() },
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {

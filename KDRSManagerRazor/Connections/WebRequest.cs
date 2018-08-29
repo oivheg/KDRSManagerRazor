@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -8,11 +9,16 @@ namespace KDRSManagerRazor.Connections
 {
     public class WebRequest
     {
-        public async Task<String> GetXml(String _srv, int _Username, String _pw, String _rt)
+        public async Task<String> GetXml(String _srv, int _Username, String _pw, String _rt, String From = "", String To = "")
         {
             String response = null;
             //Check network status
             DateTime DT = DateTime.Today;
+
+            if (!From.Equals(""))
+            {
+                DT = DateTime.ParseExact(From, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
             String srv = _srv;
             String RT = _rt;
             int YR = DT.Year;
