@@ -85,9 +85,10 @@ namespace KDRSManagerRazor.Data
             Reports.Clear();
             List<Report> data = new List<Report>();
 
-            Reports.Add(new Report(1, "Salgs Rapport Avdeling", "SaleReportD"));
+            Reports.Add(new Report(1, "Salgs Rapport Konto", "SaleReportD"));
+            Reports.Add(new Report(2, "Salgs Rapport Avdelinger", "SaleReportD"));
             Reports.Add(new Report(4, "Salgs Rapport Ansatt", "SaleReportA"));
-            Reports.Add(new Report(3, "Salgs Rapport Time", "SaleReportT"));
+            Reports.Add(new Report(5, "Salgs Rapport Time", "SaleReportD"));
         }
 
         internal static List<Report> GetReports()

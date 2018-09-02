@@ -47,7 +47,7 @@
         if (Server !== null) {
             $.ajax({
                 url: '/Report/?handler=Report',
-                data: { Adress: Server.Adress, UserID: Server.UserID, Password: Server.Password, id: $('#rpid').text(), from: $('#dateFrom').val() },
+                data: { Adress: Server.Adress, UserID: Server.UserID, Password: Server.Password, id: $('#rpid').text(), from: "22/08/2018" },
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {

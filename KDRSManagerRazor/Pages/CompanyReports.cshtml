@@ -34,7 +34,7 @@
 
             @foreach (Report report in Model.ReportList()){  // <----  placed on the same line, WORKING !!!
         <text>
-        $('#cmpreport').append('<a href="~/report?id=@report.Id&srv=@Model.srv&From='+$('#dateFrom').val()+'&To='+$('#dateFrom').val()+'"class="list-group-item"><h5>@report.DisplayName</h5></a>');
+        $('#cmpreport').append('<a href="~/report?id=@report.Id&srv=@Model.srv&from='+$('#dateFrom').val()+'&to='+$('#dateFrom').val()+'"class="list-group-item"><h5>@report.DisplayName</h5></a>');
         </text>
     }
 
