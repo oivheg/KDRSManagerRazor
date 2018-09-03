@@ -49,16 +49,19 @@
 
         } else {
             $('#cmpList').empty();
+            console.log('empty');
         }
         for (var i = 1; i < localStorage.length + 1; i++) {
-
+            var Server = new Object();
+            //if (localStorage.key(i).startsWith("Server", 0)) {
             var str = localStorage.getItem("Server" + i);
             var res = str.split(";");
             $('#cmpList').empty();
-            var Server = new Object();
+
             Server.Adress = res[0],
                 Server.UserID = res[1],
                 Server.Password = res[2];
+            //}
 
             if (Server !== null) {
                 $.ajax({
@@ -72,8 +75,9 @@
                             /**/
                             //$('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '&srv=' + response[0].server + '&from=' + $('#dateFrom').data('datepicker').viewDate + ' "  class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
                             /**/
-                            $('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '&srv=' + response[0].server + '&from=' + $('#dateFrom').val() + '&to=' + $('#dateTo').val() + ' "  class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
-
+                            response.forEach(function (company) {
+                                $('#cmpList').append('<a href="/companyreports?id=' + company.id + '&srv=' + company.server + ' "  class="list-group-item"><h4>' + company.text + '</h4>' + company.description + '</a>');
+                            });
                             //$('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '" onclick="model.passid(' + response[0].id + ')" class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
 
                         }
@@ -91,7 +95,4 @@
         }
 
     }
-
-    
-    
 </script>

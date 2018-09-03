@@ -28,9 +28,10 @@
     $(document).ready(function () {
         console.log('this is run on page load');
 
-        $('#dateFrom').val( " @Model.From.ToString()");
-
-        $('#dateTo').val("@Model.To");
+        @*$('#dateFrom').val( " @Model.From.ToString()");*@
+        @* $('#dateTo').val("@Model.To");*@
+        $('#dateFrom').val(getDate('from'));
+        $('#dateTo').val(getDate('to'));
 
             @foreach (Report report in Model.ReportList()){  // <----  placed on the same line, WORKING !!!
         <text>
