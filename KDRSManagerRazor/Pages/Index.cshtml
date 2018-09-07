@@ -11,7 +11,7 @@
         @*<h5 class="card-title">Selskap</h5>*@
     </div>
 </div>
-
+<a href="http://vg.no" onclick="saveDate('clicked', 'data' )">Store Link</a>
 <div class="list-group" id="cmpList">
 
     @*@foreach (Company cmp in await Model.CompanyList())
@@ -34,6 +34,14 @@
 <script type="text/javascript">
     $(document).ready(function () {
         console.log('this is run on page load');
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+        var yyyy = today.getFullYear();
+
+        saveDate('from', '' + dd + '/' + mm + '/' + yyyy + '');
+        saveDate('to', '' + dd + '/' + mm + '/' + yyyy + '');
         loadCMP();
     });
     const state = {
@@ -41,7 +49,8 @@
             x: 0,
             y: 0,
         }
-    }
+    };
+
     function loadCMP() {
         event.stopPropagation();
         if (localStorage.length === 0) {
@@ -55,6 +64,7 @@
             var Server = new Object();
             //if (localStorage.key(i).startsWith("Server", 0)) {
             var str = localStorage.getItem("Server" + i);
+            var serverKey = "Server" + 1;
             var res = str.split(";");
             $('#cmpList').empty();
 
@@ -75,8 +85,18 @@
                             /**/
                             //$('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '&srv=' + response[0].server + '&from=' + $('#dateFrom').data('datepicker').viewDate + ' "  class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
                             /**/
+                            var i = 0;
                             response.forEach(function (company) {
-                                $('#cmpList').append('<a href="/companyreports?id=' + company.id + '&srv=' + company.server + ' "  class="list-group-item"><h4>' + company.text + '</h4>' + company.description + '</a>');
+                                var link = document.createElement('a');
+                                link.setAttribute('href', '/companyreports');
+                                link.setAttribute('onclick', "saveDate('clicked','" + serverKey + ";" + company.id +"' )");
+                                link.className = 'list-group-item';
+                                link.innerHTML = '<h4>' + response[i].text + '</h4>' + response[i].description + '';
+
+                                var p = document.createElement('p');
+                                p.innerHTML = 'This is test string';
+                                $('#cmpList').append(link  );
+                                i++;
                             });
                             //$('#cmpList').append('<a href="/companyreports?id=' + response[0].id + '" onclick="model.passid(' + response[0].id + ')" class="list-group-item"><h4>' + response[0].text + '</h4>' + response[0].description + '</a>');
 

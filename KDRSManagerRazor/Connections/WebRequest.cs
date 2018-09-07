@@ -24,8 +24,8 @@ namespace KDRSManagerRazor.Connections
             int YR = DT.Year;
             int M = DT.Month;
             int D = DT.Day;
-            D = 22;
-            M = 8;
+            //D = 22;
+            //M = 8;
             int username = _Username;
             String pw = _pw;
             Uri geturi = new Uri("http://" + srv + ":8008/KDRPhoneService.svc/GetSalesReport?reportType=" + RT + "&yr=" + YR + "&m=" + M + "&d=" + D + "&username=%27" + username + "%27&password=%27" + pw + "%27"); //replace your xml url

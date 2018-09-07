@@ -30,12 +30,20 @@
 
         @*$('#dateFrom').val( " @Model.From.ToString()");*@
         @* $('#dateTo').val("@Model.To");*@
-        $('#dateFrom').val(getDate('from'));
-        $('#dateTo').val(getDate('to'));
+        //$('#dateFrom').val(getDate('from'));
+        //$('#dateTo').val(getDate('to'));
 
-            @foreach (Report report in Model.ReportList()){  // <----  placed on the same line, WORKING !!!
+            @foreach (Report report in Model.ReportList()){  // <----  placed on the same line, WORKING
         <text>
-        $('#cmpreport').append('<a href="~/report?id=@report.Id&srv=@Model.srv&from='+$('#dateFrom').val()+'&to='+$('#dateFrom').val()+'"class="list-group-item"><h5>@report.DisplayName</h5></a>');
+        var link = document.createElement('a');
+        link.setAttribute('href', '/report?id=@report.Id');
+        var clicked = localStorage.getItem("clicked")+ ";" + @report.Id
+            link.setAttribute('onclick', "saveDate('clicked','" + clicked + "' )");
+        link.className = 'list-group-item';
+        link.innerHTML = '<h5>@report.DisplayName</h5>';
+        $('#cmpreport').append(link);
+        @*$('#cmpreport').append('<a href="~/report?id=@report.Id" class="list-group-item"><h5>@report.DisplayName</h5></a>');*@
+        @*$('#cmpreport').append('<a href="~/report?id=@report.Id&srv=@Model.srv&from='+$('#dateFrom').val()+'&to='+$('#dateFrom').val()+'"class="list-group-item"><h5>@report.DisplayName</h5></a>');*@
         </text>
     }
 
@@ -43,5 +51,5 @@
 
     function loadCMP() {
 
-    };
+    }
 </script>

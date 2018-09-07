@@ -68,19 +68,19 @@ namespace KDRSManagerRazor.Pages
 
                 if (ReportType == 1 || ReportType == 2 || ReportType == 5)
                 {
-                    IEnumerable<SaleReportD> Companies = from s in doc.Descendants().Where(x => x.Name.LocalName == "properties")
+                    IEnumerable<object> Companies = from s in doc.Descendants().Where(x => x.Name.LocalName == "properties")
 
-                                                         select new SaleReportD
-                                                         {
-                                                             ID = s.Element(d + "ID").Value,
-                                                             SortId = int.Parse(s.Element(d + "Name").Value),
-                                                             Name = s.Element(d + "Name").Value,
-                                                             SalesAmount = (s.Element(d + "SalesAmount").Value),
-                                                             CostPrice = (s.Element(d + "CostPrice").Value)
-                                                         };
-                    var sortedCars = Companies.OrderBy(c => c.SortId);
-                    List<object> myAnythingList = (sortedCars as IEnumerable<object>).Cast<object>().ToList();
-                    rawData = myAnythingList.ToList();
+                                                    select new SaleReportD
+                                                    {
+                                                        ID = s.Element(d + "ID").Value,
+                                                        //SortId = int.Parse(s.Element(d + "Name").Value),
+                                                        Name = s.Element(d + "Name").Value,
+                                                        SalesAmount = (s.Element(d + "SalesAmount").Value),
+                                                        CostPrice = (s.Element(d + "CostPrice").Value)
+                                                    };
+                    //var sortedCars = Companies.OrderBy(c => c.SortId);
+                    //List<object> myAnythingList = (sortedCars as IEnumerable<object>).Cast<object>().ToList();
+                    rawData = Companies.ToList();
                 }
                 if (ReportType == 3)
                 {
@@ -107,6 +107,23 @@ namespace KDRSManagerRazor.Pages
                                                         CostPrice = (s.Element(d + "CostPrice").Value)
                                                     };
                     rawData = Companies.ToList();
+                }
+
+                if (ReportType == 5)
+                {
+                    IEnumerable<SalereportT> Companies = from s in doc.Descendants().Where(x => x.Name.LocalName == "properties")
+
+                                                         select new SalereportT
+                                                         {
+                                                             ID = s.Element(d + "ID").Value,
+                                                             SortId = int.Parse(s.Element(d + "Name").Value),
+                                                             Name = s.Element(d + "Name").Value,
+                                                             SalesAmount = (s.Element(d + "SalesAmount").Value),
+                                                             CostPrice = (s.Element(d + "CostPrice").Value)
+                                                         };
+                    var sortedCars = Companies.OrderBy(c => c.SortId);
+                    List<object> myAnythingList = (sortedCars as IEnumerable<object>).Cast<object>().ToList();
+                    rawData = myAnythingList.ToList();
                 }
             });
 

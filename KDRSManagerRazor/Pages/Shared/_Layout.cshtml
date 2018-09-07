@@ -50,9 +50,11 @@
         </div>*@
 
     <div class="input-daterange input-group container" id="datepicker">
+        <p>Fra Dato</p>
         <input onchange="saveDate('from', this.value)" id="dateFrom" type="text" class="input-sm form-control" name="start" />
         <span class="input-group-addon">to</span>
-        <input onchange="saveDate('to', this.value)" id="dateTo" type="text" class="input-sm form-control" name="end" />
+        <p>Ikke i bruk enda</p>
+        <input onchange="saveDate('to', this.value)" id="dateTo" type="text" class="input-sm form-control" name="end"  disabled/>
     </div>
     <br />
 
@@ -80,8 +82,20 @@
                 calendarWeeks: true,
                 autoclose: true,
                 todayHighlight: true,
+                format: "dd/mm/yyyy",
                 toggleActive: true
             });
+        </script>
+        <script type="text/javascript">
+    $(document).ready(function () {
+        console.log('this is run on page load');
+
+        @*$('#dateFrom').val( " @Model.From.ToString()");*@
+        @* $('#dateTo').val("@Model.To");*@
+        $('#dateFrom').val(getDate('from'));
+        $('#dateTo').val(getDate('to'));
+
+    });
         </script>
     </environment>
     <environment exclude="Development">
@@ -100,8 +114,21 @@
                 calendarWeeks: true,
                 autoclose: true,
                 todayHighlight: true,
+                format: "dd/mm/yyyy",
                 toggleActive: true
             });
+        </script>
+        <script src="~/js/Global.js"></script>
+        <script type="text/javascript">
+    $(document).ready(function () {
+        console.log('this is run on page load');
+
+        @*$('#dateFrom').val( " @Model.From.ToString()");*@
+        @* $('#dateTo').val("@Model.To");*@
+        $('#dateFrom').val(getDate('from'));
+        $('#dateTo').val(getDate('to'));
+
+    });
         </script>
         <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"

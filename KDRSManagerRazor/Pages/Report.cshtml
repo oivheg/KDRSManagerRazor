@@ -13,14 +13,15 @@
 <script type="text/javascript"
         src="https://code.jquery.com/jquery-1.12.4.js">
 </script>
+
 <script type="text/javascript">
 
     $(document).ready(function () {
         console.log('this is run on page load');
         loadCMP();
-         $('#dateFrom').val( "@Model.From.ToString()");
+         @*$('#dateFrom').val( "@Model.From.ToString()");
 
-        $('#dateTo').val("@Model.To");
+        $('#dateTo').val("@Model.To");*@
     });
 
     function loadCMP() {
@@ -30,24 +31,27 @@
 
         } else {
             $('#cmpList').empty();
-        };
+        }
 
+        //var Clicked = localStorage.getItem("clicked");
+        //var clickedstr = Clicked.split(";");
+        //var srv = clickedstr[0];
+        //var cmpid = clickedstr[1];
+
+        var srv = getClicked('srv');
         var Server = new Object();
-        for (var i = 1; i < localStorage.length + 1; i++) {
-
-            var str = localStorage.getItem("Server" + i);
+        var rpid = getClicked('rpid');
+        var str = localStorage.getItem(srv);
             var res = str.split(";");
-            if (res[0] === $('#rpsrv').text()) {
+
                 Server.Adress = res[0],
                     Server.UserID = res[1],
                     Server.Password = res[2];
-            }
 
-        }
         if (Server !== null) {
             $.ajax({
                 url: '/Report/?handler=Report',
-                data: { Adress: Server.Adress, UserID: Server.UserID, Password: Server.Password, id: $('#rpid').text(), from: "22/08/2018" },
+                data: { Adress: Server.Adress, UserID: Server.UserID, Password: Server.Password, id: rpid, from: getDate('from').toString() },
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
