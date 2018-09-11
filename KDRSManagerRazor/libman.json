@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+
+    {
+      "library": "twitter-bootstrap@4.1.3",
+      //"files": [ "js/bootstrap.bundle.min.js", "js/bootstrap.bundle.js.map" ],
+      "destination": "wwwroot/lib/Bs4/"
+    }
+  ]
+}
