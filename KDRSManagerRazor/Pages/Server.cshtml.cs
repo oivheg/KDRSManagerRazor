@@ -27,7 +27,7 @@ namespace KDRSManagerRazor.Pages
 
         public void OnGet()
         {
-            Message = "Your application description page." + comment;
+            Message = "Leg til din KDRGold Server";
         }
 
         //public void OnPost(string inputserver)

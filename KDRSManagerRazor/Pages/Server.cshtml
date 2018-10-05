@@ -10,93 +10,122 @@
 
 <h2>@ViewData["Title"]</h2>
 <h3>@Model.Message</h3>
-@Html.Hidden("PostID", Model.comment);
+@Html.Hidden("PostID", Model.comment)
 @using (Html.BeginForm())
 {
-    <label for="ip">Server adresse:</label>
-    <input id="ip" type="text" asp-for="ip">
-    <br />
-    <label for="user">Bruker Id</label>
-    <input id="user" type="text" asp-for="user">
-    <br />
-    <br />
-    <label for="pw">passord</label>
-    <input id="password" type="password" asp-for="pw">
-    <br />
-    <input Value="Submitt" type="Button" id="Submit" onclick="addServer()">
-    <input Value="Load" type="Button" id="Load" onclick="LoadServers()">
-}
-Ip: @Model.ip
-User: @Model.user
-PW: @Model.pw
+<div class="tab-content">
+    <div class="row">
+        <div class="col">
+            <label for="ip">Server adresse:</label>
 
-<table id="ServerTable" cellpadding="20" cellspacing="20" onload="LoadServers()">
-    <thead>
-        <tr><th>Server</th><th>User</th><th>Password</th></tr>
-    </thead>
+        </div>
+        <div class="col">
+            <input id="ip" type="text" asp-for="ip">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="user">Bruker Id</label>
+           
+        </div>
+        <div class="col">
+            <input id="user" type="text" asp-for="user">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <label for="pw">passord</label>
+          
+        </div>
+        <div class="col">
+            <input id="password" type="password" asp-for="pw">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <input Value="Submitt" type="Button" id="Submit" onclick="addServer()">
+           
+        </div>
+        <div class="col">
+            <input Value="Load" type="Button" id="Load" onclick="LoadServers()">
+        </div>
+    </div>
+    </div>
+    }
+    Ip: @Model.ip
+    User: @Model.user
+    PW: @Model.pw
 
-    <tbody id="serverlist"></tbody>
-</table>
+    <table id="ServerTable" cellpadding="20" cellspacing="20" onload="LoadServers()">
+        <thead>
+            <tr><th>Server</th><th>User</th><th>Password</th></tr>
+        </thead>
 
-<table id="ServerTable2" cellpadding="20" cellspacing="20">
-    <thead>
-        <tr><th>Server</th><th>User</th><th>Password</th></tr>
-    </thead>
-    <tbody id="serverlist">
-        @foreach (Server srv in Model.ServerList())
-        {
-            if (srv != null)
+        <tbody id="serverlist"></tbody>
+    </table>
+
+    <table id="ServerTable2" cellpadding="20" cellspacing="20">
+        <thead>
+            <tr><th>Server</th><th>User</th><th>Password</th></tr>
+        </thead>
+        <tbody id="serverlist">
+            @foreach (Server srv in Model.ServerList())
             {
-                <tr><td>@srv.Adress</td><td>@srv.UserID</td><td>@srv.Password</td></tr>
+                if (srv != null)
+                {
+                    <tr><td>@srv.Adress</td><td>@srv.UserID</td><td>@srv.Password</td></tr>
+                }
             }
-        }
-    </tbody>
-</table>
-
-<script>
-    var count = 1;
-    (function () {
-        LoadServers();
-
-    })();
-
-    function addServer() {
-        if (typeof (Storage) !== "undefined") {
-
-            localStorage.setItem("Server" + count, document.getElementById('ip').value + ";" + document.getElementById('user').value + ";" + document.getElementById('password').value);
-            document.getElementById("result").innerHTML = "You have clicked the button " + localStorage.Server;
-            count++;
+        </tbody>
+    </table>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $('.input-daterange').hide();
+    </script>
+    <script>
+        var count = 1;
+        (function () {
             LoadServers();
-        } else {
-            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+
+        })();
+
+        function addServer() {
+            if (typeof (Storage) !== "undefined") {
+
+                localStorage.setItem("Server" + count, document.getElementById('ip').value + ";" + document.getElementById('user').value + ";" + document.getElementById('password').value);
+                document.getElementById("result").innerHTML = "You have clicked the button " + localStorage.Server;
+                count++;
+                LoadServers();
+            } else {
+                document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+            }
+
         }
 
-    }
+        function LoadServers() {
+            var tbody = document.getElementById("serverlist");
+            tbody.innerHTML = "";
+            for (var i = 1; i < localStorage.length + 1; i++) {
 
-    function LoadServers() {
-        var tbody = document.getElementById("serverlist");
-        tbody.innerHTML = "";
-        for (var i = 1; i < localStorage.length + 1; i++) {
+                var str = localStorage.getItem("Server" + i);
+                var res = str.split(";");
+                var table = document.getElementById("ServerTable");
 
-            var str = localStorage.getItem("Server" + i);
-            var res = str.split(";");
-            var table = document.getElementById("ServerTable");
+                var row = document.createElement("tr");
+                var cell1 = document.createElement("td");
+                var cell2 = document.createElement("td");
+                var cell3 = document.createElement("td");
+                cell1.innerHTML = res[0];
+                cell2.innerHTML = res[1];
+                cell3.innerHTML = res[2];
+                row.appendChild(cell1);
+                row.appendChild(cell2);
+                row.appendChild(cell3);
+                tbody.appendChild(row);
+                table.appendChild(tbody);
+                count = i + 1;
+                document.getElementById('PostID').value = cell1;
+            }
 
-            var row = document.createElement("tr");
-            var cell1 = document.createElement("td");
-            var cell2 = document.createElement("td");
-            var cell3 = document.createElement("td");
-            cell1.innerHTML = res[0];
-            cell2.innerHTML = res[1];
-            cell3.innerHTML = res[2];
-            row.appendChild(cell1);
-            row.appendChild(cell2);
-            row.appendChild(cell3);
-            tbody.appendChild(row);
-            table.appendChild(tbody);
-            count = i + 1;
-            document.getElementById('PostID').value = cell1;
         }
-
-    }
-</script>
+    </script>

@@ -14,6 +14,7 @@ namespace KDRSManagerRazor.Pages
     {
         public String Name = "Not set";
         public string srv = "no server set";
+
         public string From, To;
 
         public void OnGet()
