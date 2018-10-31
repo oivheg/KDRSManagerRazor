@@ -37,7 +37,13 @@
         <text>
         var link = document.createElement('a');
         link.setAttribute('href', '/report?id=@report.Id');
-        var clicked = localStorage.getItem("clicked")+ ";" + @report.Id
+        var checkclicked = localStorage.getItem("clicked").split(";")
+        if (checkclicked.length <= 2) {
+            checkclicked = checkclicked[0] + checkclicked[1];
+
+        }
+        var clicked = checkclicked + ";" + @report.Id;
+        @*var clicked = localStorage.getItem("clicked")+ ";" + @report.Id*@
             link.setAttribute('onclick', "saveDate('clicked','" + clicked + "' )");
         link.className = 'list-group-item';
         link.innerHTML = '<h5>@report.DisplayName</h5>';

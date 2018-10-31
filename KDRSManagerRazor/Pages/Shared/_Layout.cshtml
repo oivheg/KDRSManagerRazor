@@ -59,13 +59,20 @@
                 <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
             </div>
         </div>*@
-
-    <div class="input-daterange input-group container" id="datepicker">
-        <p>Fra Dato</p>
-        <input onchange="saveDate('from', this.value)" id="dateFrom" type="text" class="input-sm form-control" name="start" />
-        <span class="input-group-addon">to</span>
-        <p>Ikke i bruk enda</p>
-        <input onchange="saveDate('to', this.value)" id="dateTo" type="text" class="input-sm form-control" name="end" disabled />
+    <div class="card">
+        <div class="card-body">
+            <div class="input-daterange input-group container" id="datepicker">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Fra Dato</span>
+                </div>
+                <input onchange="saveDate('from', this.value)" id="dateFrom" type="text" class="input-sm form-control" name="start" />
+                <span class="input-group-addon"></span>
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Til Dato</span>
+                </div>
+                <input onchange="saveDate('to', this.value)" id="dateTo" type="text" class="input-sm form-control" name="end" disabled />
+            </div>
+        </div>
     </div>
     <br />
 
